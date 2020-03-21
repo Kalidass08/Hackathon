@@ -26,10 +26,10 @@ public class JavaProject {
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String e;
 		int t=0;
-		float add=0;
+		int add=0;
 		int max=0;
 		int count=0;
-		float avg;
+		int avg;
 		JSONObject main=new JSONObject();
 		JSONObject json = new JSONObject();
 		JSONObject obj=new JSONObject();
@@ -53,8 +53,8 @@ public class JavaProject {
 			float v=Float.parseFloat(df.format(rs.getFloat("time")));
 			obj.put(k,v);
 			count++;
-			add=add+v;
-			if(max<v);
+			add=add+(int)v;
+			if(max<(int)v);
 			{
 				max=(int)v;
 			}
