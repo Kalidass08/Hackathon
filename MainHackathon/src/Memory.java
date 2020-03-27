@@ -79,6 +79,19 @@ public class Memory {
 			file1.write(obj.toString());
 			file1.close();
 			System.out.println("Data Added");
-		 
+		 htmlFormat(S,avg,max); //Function Call to Create HTML Document
+	}
+	public static void htmlFormat(String S,float avg,float max) throws IOException {
+		String Sample = String.valueOf(S);
+		String Avg = String.valueOf(avg);
+		String Max = String.valueOf(max);
+		PrintWriter out = new PrintWriter(new FileWriter("C:/Users/hp/Desktop/OutputHtml.html"));
+		out.println("<table border=1>");
+        out.println("<caption>CPU VALUES</caption>");
+        out.println("<tr><th>Usecasename</th><th>MAXIMUM CPU TIME</th><th>AVERAGE CPU TIME</th></tr>");
+        out.println("<tr><td>"+S+"</td><td>"+ max+"</td><td>"+avg+"</td></tr>");     
+        out.println("</table>");
+        out.close();
+        System.out.println("Html Page Created");
 	}
 }
