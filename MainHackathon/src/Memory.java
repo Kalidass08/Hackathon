@@ -83,12 +83,14 @@ public class Memory {
 		String Avg = String.valueOf(avg);
 		String Max = String.valueOf(max);
 		PrintWriter out = new PrintWriter(new FileWriter("C:/Users/hp/Desktop/OutputHtml.html"));
+		out.println("<center>");
 		out.println("<table border=1>");
-        out.println("<caption>CPU VALUES</caption>");
-        out.println("<tr><th>Usecasename</th><th>MAXIMUM CPU TIME</th><th>AVERAGE CPU TIME</th></tr>");
-        out.println("<tr><td>"+S+"</td><td>"+ max+"</td><td>"+avg+"</td></tr>");     
-        out.println("</table>");
-        out.close();
+		out.println("<caption>CPU VALUES</caption>");
+		out.println("<tr><th>Usecasename</th><th>MAXIMUM CPU TIME</th><th>AVERAGE CPU TIME</th></tr>");
+		out.println("<tr><td>"+S+"</td><td>"+ max+"</td><td>"+avg+"</td></tr>");     
+		out.println("</table>");
+		out.println("<center>");
+		out.close();
         System.out.println("Html Page Created");
 	}
 }
