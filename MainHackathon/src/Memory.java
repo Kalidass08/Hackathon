@@ -41,35 +41,25 @@ public class Memory {
 		   val=array[1].trim();
 		   kb=Float.parseFloat(val);
 		   //System.out.println(kb);
-		   mb=(kb/1024);
+		   mb=(kb/1024); //Calculate Mb
 		   //System.out.println(mb_val);
 		   if(max<mb)
 		   {
-			   max=mb;
+			   max=mb; //Calculate Avg
 		   }
 		   
 		  // System.out.println(mb_val);
 		   t= iter+"s";
 		   iter++;
-		   obj1.put(t,mb);
+		   obj1.put(t,mb); //Pushing Values into json object
 		  Total=Total+mb;
 		  c++;
 		 }
-		 avg=(Total/c);
+		 avg=(Total/c); //Calculate avg
 		 
-		 stm.executeUpdate("insert into data(Usecasename,Average,Max)values('"+S+"',"+avg+","+max+")");
+		 stm.executeUpdate("insert into data(Usecasename,Average,Max)values('"+S+"',"+avg+","+max+")"); //Data Inserted
 		 System.out.println("Inserted");
-		 
-//		 System.out.println("Maximum Value:"+max);
-//		 System.out.println("Total:"+Total);
-//		 System.out.println("no of entry:"+c);
-//		 System.out.println("avg:"+avg);
-		 /*HashMap<String, Float> mem = new HashMap<String, Float>();
 
-		    mem.put("AverageMemory(MB)", avg);
-		    mem.put("MaximumMemory(MB", max);
-		    */
-	
 		 obj.put("Values",obj1);
 		 obj.put("Usecasename","Sample");
 		 obj.put("AverageMemory(MB)", avg);
