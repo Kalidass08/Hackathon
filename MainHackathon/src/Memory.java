@@ -14,12 +14,8 @@ import org.json.simple.parser.JSONParser;
 import com.mysql.cj.xdevapi.JsonArray;
 
 public class Memory {
-	public static void main(String[] args) throws IOException, SQLException
+	public static void main(String[] args) throws IOException
 	{
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/Memory","root","Kalidass@0803");
-		System.out.println("Database connected\n");
-		Statement stm=conn.createStatement();
-		stm.executeUpdate("create table data(Usecasename varchar(64),Average DECIMAL(10,2),Max DECIMAL(10,2));");
 		File file = new File("Memory.txt"); 
 		BufferedReader reader= new BufferedReader(new FileReader(file));
 		String t;
@@ -34,32 +30,34 @@ public class Memory {
 		 while ( (line = reader.readLine() ) != null )
 		 {
 			 line=line.trim();
-		    lineNum++;
+			 lineNum++;
 		    if ( lineNum % 2 == 0 )
 			  continue;
-		    String[] array = line.split("   ");
+		   String[] array = line.split("   ");
 		   val=array[1].trim();
 		   kb=Float.parseFloat(val);
 		   //System.out.println(kb);
-		   mb=(kb/1024); //Calculate Mb
+		   mb=(kb/1024);
 		   //System.out.println(mb_val);
 		   if(max<mb)
 		   {
-			   max=mb; //Calculate Avg
+			   max=mb;
 		   }
-		   
 		  // System.out.println(mb_val);
 		   t= iter+"s";
 		   iter++;
-		   obj1.put(t,mb); //Pushing Values into json object
-		  Total=Total+mb;
-		  c++;
+		   obj1.put(t,mb);
+		   Total=Total+mb;
+		   c++;
 		 }
-		 avg=(Total/c); //Calculate avg
-		 
-		 stm.executeUpdate("insert into data(Usecasename,Average,Max)values('"+S+"',"+avg+","+max+")"); //Data Inserted
-		 System.out.println("Inserted");
+		 avg=(Total/c);
 
+		 try {
+			databaseConnectivity(S,avg,max);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
 		 obj.put("Values",obj1);
 		 obj.put("Usecasename","Sample");
 		 obj.put("AverageMemory(MB)", avg);
@@ -69,8 +67,20 @@ public class Memory {
 			file1.write(obj.toString());
 			file1.close();
 			System.out.println("Data Added");
-		 htmlFormat(S,avg,max); //Function Call to Create HTML Document
+			
+			htmlFormat(S,avg,max); //Function Call to Create HTML Document
 	}
+	
+	public static void databaseConnectivity(String S,float avg,float max)throws SQLException{
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/Memory","root","Kalidass@0803");
+		System.out.println("Database connected\n");
+		Statement stm=conn.createStatement();
+		stm.executeUpdate("create table data(Usecasename varchar(64),Average DECIMAL(10,2),Max DECIMAL(10,2));");
+		System.out.println("Table Created");
+		 stm.executeUpdate("insert into data(Usecasename,Average,Max)values('"+S+"',"+avg+","+max+")");
+		 System.out.println("Inserted");
+	}
+	
 	public static void htmlFormat(String S,float avg,float max) throws IOException {
 		String Sample = String.valueOf(S);
 		String Avg = String.valueOf(avg);
