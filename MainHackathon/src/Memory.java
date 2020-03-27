@@ -1,7 +1,6 @@
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-//import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.nio.file.*;
@@ -36,34 +35,32 @@ public class Memory {
 		   String[] array = line.split("   ");
 		   val=array[1].trim();
 		   kb=Float.parseFloat(val);
-		   //System.out.println(kb);
-		   mb=(kb/1024);
-		   //System.out.println(mb_val);
+		   mb=(kb/1024);           //Calculating Mb Values
 		   if(max<mb)
 		   {
-			   max=mb;
+			   max=mb;	//Calculating Max Values
 		   }
 		  // System.out.println(mb_val);
 		   t= iter+"s";
 		   iter++;
-		   obj1.put(t,mb);
+		   obj1.put(t,mb);	//Adding Values to the JSON Object
 		   Total=Total+mb;
 		   c++;
 		 }
-		 avg=(Total/c);
+		 avg=(Total/c);		//Calculating Average
 
 		 try {
-			databaseConnectivity(S,avg,max);
+			databaseConnectivity(S,avg,max);	//Make Function Call to Databse Creation and inserting Values to the DB.
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	
 		 obj.put("Values",obj1);
 		 obj.put("Usecasename","Sample");
-		 obj.put("AverageMemory(MB)", avg);
-		 obj.put("MaximumMemory(MB)", max);
+		 obj.put("AverageMemory(MB)", avg);	//Adding Avg Values to Json
+		 obj.put("MaximumMemory(MB)", max);	//Adding Max Values to Json
 		
-		 FileWriter file1=new FileWriter("op.json");
+		 FileWriter file1=new FileWriter("op.json"); 
 			file1.write(obj.toString());
 			file1.close();
 			System.out.println("Data Added");
